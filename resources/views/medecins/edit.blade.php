@@ -47,8 +47,14 @@
 
                                     <div class="form-group">
                                         <label for="specialite">Spécialité</label>
-                                        <input type="text" class="form-control" name="specialite"
-                                            value="{{ $medecin->specialite }}" required>
+                                        <select class="form-control" id="specialite" name="specialite"
+                                            required>
+                                            <option value="">Sélectionner une spécialité</option>
+                                            <option value="Cardiologue" {{ $medecin->specialite == 'Cardiologue' ? 'selected' : '' }}>Cardiologue</option>
+                                            <option value="Généraliste" {{ $medecin->specialite == 'Généraliste' ? 'selected' : '' }}>Généraliste</option>
+                                            <option value="Pédiatre" {{ $medecin->specialite == 'Pédiatre' ? 'selected' : '' }}>Pédiatre</option>
+                                            <option value="Dermatologue" {{ $medecin->specialite == 'Dermatologue' ? 'selected' : '' }}>Dermatologue</option>
+                                        </select>
                                     </div>
 
                                     <div class="form-group">

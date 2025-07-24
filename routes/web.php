@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MedecinsController;
+use App\Http\Controllers\PatientsController;
 use App\Http\Livewire\MedecinsIndex;
 use Illuminate\Support\Facades\Route;
 
@@ -36,15 +37,17 @@ Route::get('/dashboard', function(){
 })->middleware('auth')->name('dashboard');
 
 Route::get('/medecins', [MedecinsController::class, 'index'])->middleware('auth')->name('medecins.index');
-Route::post('/medecins', [MedecinsController::class, 'store'])->name('medecins.store');
-Route::get('/medecins/{id}/edit', [MedecinsController::class, 'edit'])->name('medecins.edit');
-Route::put('/medecins/{id}', [MedecinsController::class, 'update'])->name('medecins.update');
-Route::delete('/medecins/{id}', [MedecinsController::class, 'destroy'])->name('medecins.destroy');
+Route::post('/medecins', [MedecinsController::class, 'store'])->middleware('auth')->name('medecins.store');
+Route::get('/medecins/{id}/edit', [MedecinsController::class, 'edit'])->middleware('auth')->name('medecins.edit');
+Route::put('/medecins/{id}', [MedecinsController::class, 'update'])->middleware('auth')->name('medecins.update');
+Route::delete('/medecins/{id}', [MedecinsController::class, 'destroy'])->middleware('auth')->name('medecins.destroy');
 
 
-Route::get('/patients', function(){
-    return view('patients');
-})->middleware('auth')->name('patients'); 
+Route::get('/patients', [PatientsController::class, 'index'])->middleware('auth')->name('patients.index');
+Route::post('/patients', [PatientsController::class, 'store'])->middleware('auth')->name('patients.store');
+Route::get('/patients/{id}/edit', [PatientsController::class, 'edit'])->middleware('auth')->name('patients.edit');
+Route::put('/patients/{id}', [PatientsController::class, 'update'])->middleware('auth')->name('patients.update');
+Route::delete('/patients/{id}', [PatientsController::class, 'destroy'])->middleware('auth')->name('patients.destroy');
 
 Route::get('/consultations', function(){
     return view('consultations');

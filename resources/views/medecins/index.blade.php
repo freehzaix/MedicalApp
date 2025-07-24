@@ -45,8 +45,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="specialite">Spécialité</label>
-                                        <input type="text" class="form-control" id="specialite" name="specialite"
-                                            placeholder="Cardiologue, Généraliste..." required>
+                                        <select class="form-control" id="specialite" name="specialite" required>
+                                            <option value="">Sélectionner une spécialité</option>
+                                            <option value="Cardiologue">Cardiologue</option>
+                                            <option value="Généraliste">Généraliste</option>
+                                            <option value="Pédiatre">Pédiatre</option>
+                                            <option value="Dermatologue">Dermatologue</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="telephone">Téléphone</label>

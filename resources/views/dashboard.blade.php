@@ -46,13 +46,18 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>320</h3>
+                                <h3>
+                                @php
+                                    $totalPatients = App\Models\Patient::count();
+                                    echo $totalPatients;
+                                @endphp
+                                </h3>
                                 <p>Patients enregistrés</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-users"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Voir la liste <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('patients.index') }}" class="small-box-footer">Voir la liste <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 

@@ -91,14 +91,14 @@
                         <li class="nav-item menu-open">
                             <a href="{{ route('medecins.index') }}"
                                 class="nav-link {{ request()->routeIs('medecins.index') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-user-md"></i>
                                 <p>Medecins</p>
                             </a>
                         </li>
 
                         <li class="nav-item menu-open">
-                            <a href="{{ route('patients') }}"
-                                class="nav-link {{ request()->routeIs('patients') ? 'active' : '' }}">
+                            <a href="{{ route('patients.index') }}"
+                                class="nav-link {{ request()->routeIs('patients.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Patients</p>
                             </a>
@@ -106,7 +106,7 @@
                         <li class="nav-item menu-open">
                             <a href="{{ route('consultations') }}"
                                 class="nav-link {{ request()->routeIs('consultations') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-user-md"></i>
+                                <i class="nav-icon fas fa-notes-medical"></i>
                                 <p>Consultations</p>
                             </a>
                         </li>

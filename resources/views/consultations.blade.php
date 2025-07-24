@@ -51,10 +51,7 @@ Gestion des consultations
                                             <option>Dr. Mariam Koné</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="date_consultation">Date</label>
-                                        <input type="date" class="form-control" id="date_consultation">
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <label for="motif">Motif de la consultation</label>
                                         <input type="text" class="form-control" id="motif" placeholder="Ex: Fièvre, douleurs...">

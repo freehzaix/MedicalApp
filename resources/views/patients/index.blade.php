@@ -1,50 +1,54 @@
 @section('titlePage')
-Gestion des patients
+    Gestion des patients
 @endsection
+
 <x-layout>
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
+
+        <!-- Content Header -->
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Tableau de bord</h1>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Accueil</a></li>
                             <li class="breadcrumb-item active">@yield('titlePage')</li>
                         </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.content-header -->
 
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
 
-                    <!-- Formulaire d'enregistrement du patient -->
+                    <!-- Formulaire d'enregistrement -->
                     <div class="col-md-4">
                         <div class="card card-success">
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fas fa-user-plus"></i> Ajouter un Patient</h3>
                             </div>
-                            <form>
+
+                            <form action="{{ route('patients.store') }}" method="POST">
+                                @csrf
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="nom_patient">Nom complet</label>
-                                        <input type="text" class="form-control" id="nom_patient" placeholder="Entrer le nom complet">
+                                        <label for="nom">Nom complet</label>
+                                        <input type="text" name="nom" class="form-control"
+                                            placeholder="Entrer le nom complet" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="date_naissance">Date de naissance</label>
-                                        <input type="date" class="form-control" id="date_naissance">
+                                        <input type="date" name="date_naissance" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="genre">Genre</label>
-                                        <select class="form-control" id="genre">
+                                        <select name="genre" class="form-control" required>
                                             <option value="">-- Sélectionner --</option>
                                             <option value="Homme">Homme</option>
                                             <option value="Femme">Femme</option>
@@ -52,11 +56,13 @@ Gestion des patients
                                     </div>
                                     <div class="form-group">
                                         <label for="telephone_patient">Téléphone</label>
-                                        <input type="text" class="form-control" id="telephone_patient" placeholder="07 00 00 00 00">
+                                        <input type="text" name="telephone" class="form-control"
+                                            placeholder="07 00 00 00 00" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="adresse">Adresse</label>
-                                        <input type="text" class="form-control" id="adresse" placeholder="Ex: Cocody, Abidjan">
+                                        <input type="text" name="adresse" class="form-control"
+                                            placeholder="Ex: Cocody, Abidjan">
                                     </div>
                                 </div>
                                 <div class="card-footer">
@@ -85,32 +91,37 @@ Gestion des patients
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Exemple statique -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Traoré Aïcha</td>
-                                            <td>1992-04-15</td>
-                                            <td>Femme</td>
-                                            <td>07 55 88 66 44</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Konan Serge</td>
-                                            <td>1986-09-20</td>
-                                            <td>Homme</td>
-                                            <td>07 44 22 11 00</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <!-- À remplacer dynamiquement -->
+                                        @foreach ($patients as $patient)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $patient->nom }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($patient->date_naissance)->format('d/m/Y') }}
+</td>
+                                                <td>{{ $patient->genre }}</td>
+                                                <td>{{ $patient->telephone }}</td>
+                                                <td>
+                                                    <a href="{{ route('patients.edit', $patient->id) }}"
+                                                        class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                                    <form action="{{ route('patients.destroy', $patient->id) }}"
+                                                        method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            onclick="return confirm('Supprimer ce patient ?')"
+                                                            class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
+
+                                <!-- Pagination -->
+                                <div class="mt-3 px-3">
+                                    {{ $patients->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -119,7 +130,5 @@ Gestion des patients
             </div>
         </section>
 
-
-        <!-- /.content -->
     </div>
 </x-layout>
