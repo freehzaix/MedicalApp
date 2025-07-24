@@ -60,13 +60,8 @@
                 </div>
             </form>
 
-            @if (Route::has('password.request'))
-                <p class="mt-3 mb-1">
-                    <a href="{{ route('password.request') }}">Mot de passe oublié ?</a>
-                </p>
-            @endif
-
-            <a href="{{ route('register') }}">Pas encore inscrire? Créer un compte.</a>
+            <a href="#"></a>
+            
         </div>
         <!-- /.card-body -->
     </div>

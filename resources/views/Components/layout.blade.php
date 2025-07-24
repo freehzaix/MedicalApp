@@ -5,10 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>ClinicApp</title>
+    <title>@yield('titlePage') | ClinicApp</title>
 
     <!-- Styles / Scripts -->
     @vite(['resources/js/app.js'])
+
+    <link rel="icon" href="{{ asset('img/logo.jpg') }}" type="image/x-icon">
 
 </head>
 
@@ -27,7 +29,7 @@
                     <a href="#" class="nav-link">Accueil</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Nous contacter</a>
+                    <a href="#" class="nav-link"></a>
                 </li>
             </ul>
 
@@ -63,23 +65,12 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-                {{-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                    style="opacity: .8"> --}}
-                <span class="brand-text font-weight-light">Clinic'App</span>
+            <a href="{{ route('dashboard') }}" class="brand-link">
+                <img src="{{ asset('img/logo.jpg') }}" alt="{{ config('app.name') }}" width="100%">
             </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="#" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Jean-Luc DOH</a>
-                    </div>
-                </div>
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -88,35 +79,57 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
+                            <a href="{{ route('dashboard') }}"
+                                class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Espace membre
-                                    <i class="right fas fa-angle-left"></i>
+                                    Tableau de bord
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link active">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Active Page</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Inactive Page</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Simple Link
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
+
+                        <li class="nav-item menu-open">
+                            <a href="{{ route('medecins.index') }}"
+                                class="nav-link {{ request()->routeIs('medecins.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>Medecins</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item menu-open">
+                            <a href="{{ route('patients') }}"
+                                class="nav-link {{ request()->routeIs('patients') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Patients</p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="{{ route('consultations') }}"
+                                class="nav-link {{ request()->routeIs('consultations') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user-md"></i>
+                                <p>Consultations</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item menu-open">
+                            <a href="{{ route('rendezvous') }}"
+                                class="nav-link {{ request()->routeIs('rendezvous') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-calendar-check"></i>
+                                <p>Rendez-vous</p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="{{ route('comptabilites') }}"
+                                class="nav-link {{ request()->routeIs('comptabilites') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-wallet"></i>
+                                <p>Comptabilités</p>
+                            </a>
+                        </li>
+                        <hr />
+                        <li class="nav-item menu-open">
+                            <a href="{{ route('logout') }}" class="nav-link">
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
+                                <p>Se déconnecter</p>
                             </a>
                         </li>
                     </ul>
@@ -144,14 +157,46 @@
         <footer class="main-footer">
             <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
-                Anything you want
+
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            <strong>Copyright &copy; 2025 <a href="#">Centre Médical les Perles</a>.</strong> All rights
             reserved.
         </footer>
     </div>
     <!-- ./wrapper -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (session('success') || session('error'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3500,
+                    timerProgressBar: true,
+                });
+
+                @if (session('success'))
+                    Toast.fire({
+                        icon: 'success',
+                        title: '{{ session('success') }}'
+                    });
+                @endif
+
+                @if (session('error'))
+                    Toast.fire({
+                        icon: 'error',
+                        title: '{{ session('error') }}'
+                    });
+                @endif
+            });
+        </script>
+    @endif
+
+
 </body>
 
 </html>
