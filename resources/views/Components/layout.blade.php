@@ -104,8 +104,8 @@
                             </a>
                         </li>
                         <li class="nav-item menu-open">
-                            <a href="{{ route('consultations') }}"
-                                class="nav-link {{ request()->routeIs('consultations') ? 'active' : '' }}">
+                            <a href="{{ route('consultations.index') }}"
+                                class="nav-link {{ request()->routeIs('consultations.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-notes-medical"></i>
                                 <p>Consultations</p>
                             </a>

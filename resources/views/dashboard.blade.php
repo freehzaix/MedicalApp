@@ -32,13 +32,18 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>25</h3>
-                                <p>Consultations du jour</p>
+                                <h3>
+                                @php
+                                    $totalConsultations = App\Models\Consultation::count();
+                                    echo $totalConsultations;
+                                @endphp
+                                </h3>
+                                <p>Consultations</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-user-md"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Plus d'infos <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('consultations.index') }}" class="small-box-footer">Plus d'infos <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 

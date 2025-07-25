@@ -1,5 +1,5 @@
 @section('titlePage')
-Gestion des consultations
+    Gestion des consultations
 @endsection
 <x-layout>
     <div class="content-wrapper">
@@ -32,39 +32,49 @@ Gestion des consultations
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fas fa-notes-medical"></i> Nouvelle Consultation</h3>
                             </div>
-                            <form>
+
+                            <form method="POST" action="{{ route('consultations.update', $consultation) }}">
+                                @csrf
+                                @method('PUT')
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="patient">Patient</label>
-                                        <select class="form-control" id="patient">
+                                        <select class="form-control" name="patient_id" required>
                                             <option value="">-- Sélectionner --</option>
-                                            <option>Traoré Aïcha</option>
-                                            <option>Konan Serge</option>
-                                            <!-- À remplir dynamiquement côté backend -->
+                                            @foreach ($patients as $patient)
+                                                <option value="{{ $patient->id }}" {{ $patient->id === $consultation->patient_id ? 'selected' : '' }}>{{ $patient->nom }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="medecin">Médecin</label>
-                                        <select class="form-control" id="medecin">
+                                        <select class="form-control" name="medecin_id" required>
                                             <option value="">-- Sélectionner --</option>
-                                            <option>Dr. Koffi Yao</option>
-                                            <option>Dr. Mariam Koné</option>
+                                            @foreach ($medecins as $medecin)
+                                                <option value="{{ $medecin->id }}" {{ $medecin->id === $consultation->medecin_id ? 'selected' : '' }}>{{ $medecin->nom }} ({{ $medecin->specialite }})</option>
+                                            @endforeach
                                         </select>
                                     </div>
-                                    
                                     <div class="form-group">
-                                        <label for="motif">Motif de la consultation</label>
-                                        <input type="text" class="form-control" id="motif" placeholder="Ex: Fièvre, douleurs...">
+                                        <label for="motif">Motif</label>
+                                        <input type="text" class="form-control" name="motif"
+                                            value="{{ old('motif', $consultation->motif) }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tarif">Tarif</label>
+                                        <input type="text" class="form-control" name="tarif"
+                                            value="{{ old('tarif', $consultation->tarif) }}" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="observation">Observation</label>
-                                        <textarea class="form-control" id="observation" rows="3" placeholder="Notes du médecin..."></textarea>
+                                        <textarea class="form-control" name="observation" rows="3">{{ old('observation', $consultation->observation) }} </textarea>
                                     </div>
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-warning">Enregistrer</button>
                                 </div>
                             </form>
+
                         </div>
                     </div>
 
@@ -72,7 +82,8 @@ Gestion des consultations
                     <div class="col-md-8">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title"><i class="fas fa-file-medical-alt"></i> Liste des Consultations</h3>
+                                <h3 class="card-title"><i class="fas fa-file-medical-alt"></i> Liste des Consultations
+                                </h3>
                             </div>
                             <div class="card-body table-responsive p-0">
                                 <table class="table table-hover text-nowrap">
@@ -83,24 +94,32 @@ Gestion des consultations
                                             <th>Médecin</th>
                                             <th>Date</th>
                                             <th>Motif</th>
+                                            <th>Tarif</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Exemple statique -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Traoré Aïcha</td>
-                                            <td>Dr. Koffi Yao</td>
-                                            <td>2025-07-17</td>
-                                            <td>Fièvre</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
-                                                <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                        <!-- À remplir dynamiquement -->
+                                        @foreach ($consultations as $consultation)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $consultation->patient->nom }}</td>
+                                                <td>{{ $consultation->medecin->nom }}</td>
+                                                <td>{{ $consultation->created_at->format('Y-m-d') }}</td>
+                                                <td>{{ $consultation->motif }}</td>
+                                                <td>{{ $consultation->tarif }} fcfa</td>
+                                                <td>
+                                                    <a href="{{ route('consultations.edit', $consultation) }}"
+                                                        class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                                    <form action="{{ route('consultations.destroy', $consultation) }}"
+                                                        method="POST" style="display:inline-block;">
+                                                        @csrf @method('DELETE')
+                                                        <button class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Supprimer ?')"><i
+                                                                class="fas fa-trash"></i></button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
