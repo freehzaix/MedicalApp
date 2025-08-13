@@ -1,5 +1,5 @@
 @section('titlePage')
-    Modifier une consultation
+    Nouvelle consultation
 @endsection
 <x-layout>
     <div class="content-wrapper">
@@ -27,25 +27,22 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
 
-                    <!-- Formulaire de modification -->
+                    <!-- Formulaire de création -->
                     <div class="col-md-6">
-                        <div class="card card-warning">
+                        <div class="card card-success">
                             <div class="card-header">
-                                <h3 class="card-title"><i class="fas fa-edit"></i> Modifier la consultation</h3>
+                                <h3 class="card-title"><i class="fas fa-plus"></i> Nouvelle consultation</h3>
                             </div>
 
-                            <form method="POST" action="{{ route('consultations.update', $consultation->id) }}">
+                            <form method="POST" action="{{ route('consultations.store') }}">
                                 @csrf
-                                @method('PUT')
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="medecin_id">Médecin</label>
                                         <select name="medecin_id" id="medecin_id" class="form-control" required>
+                                            <option value="">-- Sélectionner --</option>
                                             @foreach ($medecins as $medecin)
-                                                <option value="{{ $medecin->id }}"
-                                                    {{ $consultation->medecin_id == $medecin->id ? 'selected' : '' }}>
-                                                    {{ $medecin->nom }}
-                                                </option>
+                                                <option value="{{ $medecin->id }}">{{ $medecin->nom }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -53,11 +50,9 @@
                                     <div class="form-group">
                                         <label for="patient_id">Patient</label>
                                         <select name="patient_id" id="patient_id" class="form-control" required>
+                                            <option value="">-- Sélectionner --</option>
                                             @foreach ($patients as $patient)
-                                                <option value="{{ $patient->id }}"
-                                                    {{ $consultation->patient_id == $patient->id ? 'selected' : '' }}>
-                                                    {{ $patient->nom }}
-                                                </option>
+                                                <option value="{{ $patient->id }}">{{ $patient->nom }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -65,9 +60,9 @@
                                     <div class="form-group">
                                         <label for="service_id">Service</label>
                                         <select name="service_id" id="service_id" class="form-control" required>
+                                            <option value="">-- Sélectionner --</option>
                                             @foreach ($services as $service)
-                                                <option value="{{ $service->id }}" data-prix="{{ $service->prix }}"
-                                                    {{ $consultation->service_id == $service->id ? 'selected' : '' }}>
+                                                <option value="{{ $service->id }}" data-prix="{{ $service->prix }}">
                                                     {{ $service->nom }}
                                                 </option>
                                             @endforeach
@@ -77,26 +72,25 @@
                                     <div class="form-group">
                                         <label for="prix">Prix (FCFA)</label>
                                         <input type="number" step="0.01" class="form-control" id="prix"
-                                            name="prix" value="{{ old('prix', $consultation->prix) }}" readonly>
+                                            name="prix" readonly>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="date_consultation">Date de consultation</label>
                                         <input type="datetime-local" class="form-control" id="date_consultation"
-                                            name="date_consultation"
-                                            value="{{ old('date_consultation', $consultation->date_consultation->format('Y-m-d\TH:i')) }}"
+                                            name="date_consultation" value="{{ now()->format('Y-m-d\TH:i:s') }}"
                                             required>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="notes">Notes</label>
-                                        <textarea class="form-control" id="notes" name="notes">{{ old('notes', $consultation->notes) }}</textarea>
+                                        <textarea class="form-control" id="notes" name="notes">{{ old('notes') }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Mettre à
-                                        jour</button>
+                                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i>
+                                        Enregistrer</button>
                                     <a href="{{ route('consultations.index') }}" class="btn btn-secondary"><i
                                             class="fas fa-arrow-left"></i> Retour</a>
                                 </div>

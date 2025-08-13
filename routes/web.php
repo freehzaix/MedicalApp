@@ -3,6 +3,9 @@
 use App\Http\Controllers\ConsultationsController;
 use App\Http\Controllers\MedecinsController;
 use App\Http\Controllers\PatientsController;
+use App\Http\Controllers\RendezvousController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SpecialitesController;
 use App\Http\Livewire\MedecinsIndex;
 use Illuminate\Support\Facades\Route;
 
@@ -37,14 +40,12 @@ Route::get('/dashboard', function(){
     return view('dashboard');
 })->middleware('auth')->name('dashboard');
 
+Route::resource('specialites', SpecialitesController::class)->middleware('auth')->except(['show']);
 Route::resource('medecins', MedecinsController::class)->middleware('auth')->except(['show']);
 Route::resource('patients', PatientsController::class)->middleware('auth')->except(['show']);
 Route::resource('consultations', ConsultationsController::class)->middleware('auth')->except(['show']);
-
-
-Route::get('/rendezvous', function(){
-    return view('rendezvous');
-})->middleware('auth')->name('rendezvous');
+Route::resource('/rendezvous', RendezvousController::class)->middleware('auth')->except(['show']);
+Route::resource('services', ServiceController::class)->middleware('auth')->except(['show']);
 
 Route::get('/comptabilites', function(){
     return view('comptabilites');

@@ -89,6 +89,14 @@
                         </li>
 
                         <li class="nav-item menu-open">
+                            <a href="{{ route('specialites.index') }}"
+                                class="nav-link {{ request()->routeIs('specialites.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-folder"></i>
+                                <p>Specialités</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item menu-open">
                             <a href="{{ route('medecins.index') }}"
                                 class="nav-link {{ request()->routeIs('medecins.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-user-md"></i>
@@ -103,6 +111,15 @@
                                 <p>Patients</p>
                             </a>
                         </li>
+
+                        <li class="nav-item menu-open">
+                            <a href="{{ route('rendezvous.index') }}"
+                                class="nav-link {{ request()->routeIs('rendezvous.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-calendar-check"></i>
+                                <p>Rendez-vous</p>
+                            </a>
+                        </li>
+                        
                         <li class="nav-item menu-open">
                             <a href="{{ route('consultations.index') }}"
                                 class="nav-link {{ request()->routeIs('consultations.index') ? 'active' : '' }}">
@@ -112,12 +129,13 @@
                         </li>
 
                         <li class="nav-item menu-open">
-                            <a href="{{ route('rendezvous') }}"
-                                class="nav-link {{ request()->routeIs('rendezvous') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-calendar-check"></i>
-                                <p>Rendez-vous</p>
+                            <a href="{{ route('services.index') }}"
+                                class="nav-link {{ request()->routeIs('services.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-briefcase-medical"></i>
+                                <p>Services</p>
                             </a>
                         </li>
+
                         <li class="nav-item menu-open">
                             <a href="{{ route('comptabilites') }}"
                                 class="nav-link {{ request()->routeIs('comptabilites') ? 'active' : '' }}">

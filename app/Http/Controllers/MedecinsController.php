@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medecin;
+use App\Models\Specialite;
 use Illuminate\Http\Request;
 
 class MedecinsController extends Controller
@@ -13,7 +14,8 @@ class MedecinsController extends Controller
         // Logique pour afficher la liste des médecins
         // Par exemple, récupérer les médecins depuis la base de données
         $medecins = Medecin::paginate(5);
-        return view('medecins.index', compact('medecins'));
+        $specialites = Specialite::all();
+        return view('medecins.index', compact('medecins', 'specialites'));
     }
 
     public function store(Request $request)
@@ -21,15 +23,17 @@ class MedecinsController extends Controller
         // Validation
         $request->validate([
             'nom' => 'required|string|max:255',
-            'specialite' => 'required|string|max:255',
+            'specialite_id' => 'required|string|max:255',
             'telephone' => 'required|string|max:20',
+            'tarif' => 'required|string',
         ]);
 
         // Enregistrement
         Medecin::create([
             'nom' => $request->nom,
-            'specialite' => $request->specialite,
+            'specialite_id' => $request->specialite_id,
             'telephone' => $request->telephone,
+            'tarif' => $request->tarif,
         ]);
 
         return redirect()->back()->with('success', 'Médecin ajouté avec succès.');
@@ -38,16 +42,18 @@ class MedecinsController extends Controller
     public function edit($id)
     {
         $medecin = Medecin::findOrFail($id);
+        $specialites = Specialite::all();
         $medecins = Medecin::paginate(5); // Récupérer tous les médecins
-        return view('medecins.edit', compact('medecin', 'medecins'));
+        return view('medecins.edit', compact('medecin', 'specialites', 'medecins'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
             'nom' => 'required',
-            'specialite' => 'required',
+            'specialite_id' => 'required',
             'telephone' => 'required',
+            'tarif' => 'required',
         ]);
 
         $medecin = Medecin::findOrFail($id);
@@ -63,4 +69,5 @@ class MedecinsController extends Controller
 
         return redirect()->route('medecins.index')->with('success', 'Médecin supprimé avec succès.');
     }
+
 }

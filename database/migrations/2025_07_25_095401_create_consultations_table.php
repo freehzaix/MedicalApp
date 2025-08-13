@@ -4,27 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained()->onDelete('cascade');
             $table->foreignId('medecin_id')->constrained()->onDelete('cascade');
-            $table->string('motif');
-            $table->text('observation')->nullable();
-            $table->string('tarif')->nullable();
+            $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+            $table->foreignId('service_id')->constrained()->onDelete('cascade');
+            $table->decimal('prix', 10, 2);
+            $table->text('notes')->nullable();
+            $table->dateTime('date_consultation');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('consultations');

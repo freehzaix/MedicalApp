@@ -47,13 +47,12 @@
 
                                     <div class="form-group">
                                         <label for="specialite">Spécialité</label>
-                                        <select class="form-control" id="specialite" name="specialite"
+                                        <select class="form-control" id="specialite" name="specialite_id"
                                             required>
                                             <option value="">Sélectionner une spécialité</option>
-                                            <option value="Cardiologue" {{ $medecin->specialite == 'Cardiologue' ? 'selected' : '' }}>Cardiologue</option>
-                                            <option value="Généraliste" {{ $medecin->specialite == 'Généraliste' ? 'selected' : '' }}>Généraliste</option>
-                                            <option value="Pédiatre" {{ $medecin->specialite == 'Pédiatre' ? 'selected' : '' }}>Pédiatre</option>
-                                            <option value="Dermatologue" {{ $medecin->specialite == 'Dermatologue' ? 'selected' : '' }}>Dermatologue</option>
+                                            @foreach($specialites as $specialite)
+                                                <option value="{{ $specialite->id }}" {{ $medecin->specialite_id == $specialite->id ? 'selected' : '' }}>{{ $specialite->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -61,6 +60,12 @@
                                         <label for="telephone">Téléphone</label>
                                         <input type="text" class="form-control" name="telephone"
                                             value="{{ $medecin->telephone }}" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tarif">Tarif du medecin</label>
+                                        <input type="text" class="form-control" id="tarif" name="tarif"
+                                            value="{{ $medecin->tarif }}" placeholder="Entrer le tarif" required>
                                     </div>
                                 </div>
                                 <div class="card-footer">
@@ -95,7 +100,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $medecin->nom }}</td>
-                                                <td>{{ $medecin->specialite }}</td>
+                                                <td>{{ $medecin->specialite->name }}</td>
                                                 <td>{{ $medecin->telephone }}</td>
                                                 <td>
                                                     <a href="{{ route('medecins.edit', $medecin->id) }}"

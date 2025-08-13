@@ -1,101 +1,98 @@
 @section('titlePage')
-  Tableau de bord
+    Tableau de bord
 @endsection
+
 <x-layout>
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
+        <!-- Content Header -->
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Tableau de bord</h1>
-                    </div><!-- /.col -->
+                    </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Accueil</a></li>
                             <li class="breadcrumb-item active">@yield('titlePage')</li>
                         </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.content-header -->
 
         <!-- Main content -->
-        
-
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
 
-                    <!-- Box: Consultations du jour -->
+                    <!-- Total Consultations -->
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>
-                                @php
-                                    $totalConsultations = App\Models\Consultation::count();
-                                    echo $totalConsultations;
-                                @endphp
-                                </h3>
+                                <h3>{{ App\Models\Consultation::count() }}</h3>
                                 <p>Consultations</p>
                             </div>
                             <div class="icon">
-                                <i class="fas fa-user-md"></i>
+                                <i class="fas fa-stethoscope"></i>
                             </div>
-                            <a href="{{ route('consultations.index') }}" class="small-box-footer">Plus d'infos <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('consultations.index') }}" class="small-box-footer">
+                                Plus d'infos <i class="fas fa-arrow-circle-right"></i>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Box: Patients enregistrés -->
+                    <!-- Total Patients -->
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>
-                                @php
-                                    $totalPatients = App\Models\Patient::count();
-                                    echo $totalPatients;
-                                @endphp
-                                </h3>
+                                <h3>{{ App\Models\Patient::count() }}</h3>
                                 <p>Patients enregistrés</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-users"></i>
                             </div>
-                            <a href="{{ route('patients.index') }}" class="small-box-footer">Voir la liste <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('patients.index') }}" class="small-box-footer">
+                                Voir la liste <i class="fas fa-arrow-circle-right"></i>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Box: Rendez-vous à venir -->
+                    <!-- Total Rendez-vous -->
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>12</h3>
-                                <p>Rendez-vous à venir</p>
+                                <h3>{{ App\Models\RendezVous::count() }}</h3>
+                                <p>Rendez-vous</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-calendar-check"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Gérer les RDV <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('rendezvous.index') }}" class="small-box-footer">
+                                Gérer les RDV <i class="fas fa-arrow-circle-right"></i>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Box: Revenus du mois -->
+                    <!-- Total Médecins -->
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>850.000 FCFA</h3>
-                                <p>Revenus ce mois</p>
+                                <h3>{{ App\Models\Medecin::count() }}</h3>
+                                <p>Médecins</p>
                             </div>
                             <div class="icon">
-                                <i class="fas fa-wallet"></i>
+                                <i class="fas fa-user-md"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Voir le rapport <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('medecins.index') }}" class="small-box-footer">
+                                Voir la liste <i class="fas fa-arrow-circle-right"></i>
+                            </a>
                         </div>
                     </div>
 
                 </div>
 
+                <!-- Tableau calendrier RDV -->
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Calendrier des RDV</h3>
@@ -107,28 +104,30 @@
                                     <th>Patient</th>
                                     <th>Médecin</th>
                                     <th>Date</th>
-                                    <th>Statut</th>
+                                    <th>Motif</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Jean Koffi</td>
-                                    <td>Dr. Kouamé</td>
-                                    <td>17/07/2025</td>
-                                    <td><span class="badge bg-success">Terminée</span></td>
-                                </tr>
-                                <!-- Autres lignes -->
+                                @foreach (App\Models\RendezVous::latest()->take(5)->get() as $rdv)
+                                    <tr>
+                                        <td>{{ $rdv->patient->nom ?? 'Inconnu' }}</td>
+                                        <td>{{ $rdv->medecin->nom ?? 'Inconnu' }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($rdv->date)->format('d/m/Y à H:i') }}</td>
+                                        <td>
+                                            <span
+                                                class="badge 
+                                                {{ $rdv->motif == 'terminé' ? 'btn btn-success' : ($rdv->motif == 'annulé' ? 'btn btn-danger' : 'btn btn-primary') }}">
+                                                {{ ucfirst($rdv->motif) }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-
-
-
-
             </div>
         </section>
-        <!-- /.content -->
     </div>
 </x-layout>
