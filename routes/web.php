@@ -43,7 +43,7 @@ Route::get('/dashboard', function(){
 Route::resource('specialites', SpecialitesController::class)->middleware('auth')->except(['show']);
 Route::resource('medecins', MedecinsController::class)->middleware('auth')->except(['show']);
 Route::resource('patients', PatientsController::class)->middleware('auth')->except(['show']);
-Route::resource('consultations', ConsultationsController::class)->middleware('auth')->except(['show']);
+
 Route::resource('/rendezvous', RendezvousController::class)->middleware('auth')->except(['show']);
 Route::resource('services', ServiceController::class)->middleware('auth')->except(['show']);
 

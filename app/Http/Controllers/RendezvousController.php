@@ -15,7 +15,7 @@ class RendezVousController extends Controller
     public function index()
     {
         $rendezvous = RendezVous::with(['patient', 'medecin'])
-            ->orderBy('date_rdv', 'asc')
+            ->orderBy('date_rdv', 'desc')
             ->paginate(10);
 
         $patients = Patient::orderBy('nom')->get();

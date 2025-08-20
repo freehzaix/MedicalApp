@@ -63,4 +63,7 @@ class PatientsController extends Controller
 
         return redirect()->route('patients.index')->with('success', 'Patient supprimé avec succès.');
     }
+
+    
+
 }

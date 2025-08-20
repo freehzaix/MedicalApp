@@ -70,4 +70,6 @@ class MedecinsController extends Controller
         return redirect()->route('medecins.index')->with('success', 'Médecin supprimé avec succès.');
     }
 
+    
+    
 }

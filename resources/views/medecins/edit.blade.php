@@ -91,6 +91,7 @@
                                             <th>Nom</th>
                                             <th>Spécialité</th>
                                             <th>Téléphone</th>
+                                            <th>Tarif</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -102,16 +103,17 @@
                                                 <td>{{ $medecin->nom }}</td>
                                                 <td>{{ $medecin->specialite->name }}</td>
                                                 <td>{{ $medecin->telephone }}</td>
+                                                <td>{{ number_format($medecin->tarif, 0, ',', ' ') }} FCFA</td>
                                                 <td>
                                                     <a href="{{ route('medecins.edit', $medecin->id) }}"
-                                                        class="btn btn-primary btn-sm">Modifier</a>
+                                                        class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
 
                                                     <form action="{{ route('medecins.destroy', $medecin->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Supprimer ce médecin ?')">Supprimer</button>
+                                                            onclick="return confirm('Supprimer ce médecin ?')"><i class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>

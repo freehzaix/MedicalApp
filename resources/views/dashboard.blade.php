@@ -26,22 +26,6 @@
             <div class="container-fluid">
                 <div class="row">
 
-                    <!-- Total Consultations -->
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3>{{ App\Models\Consultation::count() }}</h3>
-                                <p>Consultations</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-stethoscope"></i>
-                            </div>
-                            <a href="{{ route('consultations.index') }}" class="small-box-footer">
-                                Plus d'infos <i class="fas fa-arrow-circle-right"></i>
-                            </a>
-                        </div>
-                    </div>
-
                     <!-- Total Patients -->
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-success">
@@ -85,6 +69,22 @@
                                 <i class="fas fa-user-md"></i>
                             </div>
                             <a href="{{ route('medecins.index') }}" class="small-box-footer">
+                                Voir la liste <i class="fas fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Total Médecins -->
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-primary">
+                            <div class="inner">
+                                <h3>{{ App\Models\Specialite::count() }}</h3>
+                                <p>Spécialités</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <a href="{{ route('specialites.index') }}" class="small-box-footer">
                                 Voir la liste <i class="fas fa-arrow-circle-right"></i>
                             </a>
                         </div>
