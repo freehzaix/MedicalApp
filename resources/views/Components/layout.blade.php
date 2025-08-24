@@ -129,8 +129,8 @@
                         </li>
 
                         <li class="nav-item menu-open">
-                            <a href="{{ route('comptabilites') }}"
-                                class="nav-link {{ request()->routeIs('comptabilites') ? 'active' : '' }}">
+                            <a href="#"
+                                class="nav-link">
                                 <i class="nav-icon fas fa-wallet"></i>
                                 <p>Comptabilités</p>
                             </a>
