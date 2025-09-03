@@ -29,9 +29,13 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
+        // ✅ Corrigé
+        $user->assignRole('admin');
+
         // Connexion automatique après l'inscription
         auth()->login($user);
 
         return redirect('/dashboard')->with('success', 'Inscription réussie !');
+
     }
 }

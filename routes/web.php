@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\ConsultationsController;
+use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\MedecinsController;
 use App\Http\Controllers\PatientsController;
 use App\Http\Controllers\RendezvousController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpecialitesController;
-use App\Http\Livewire\MedecinsIndex;
+use App\Http\Controllers\TypeExamenController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +27,9 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
 
+
+
+
 // Routes d'authentification
 Route::get('/auth/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/auth/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
@@ -40,9 +45,16 @@ Route::get('/dashboard', function(){
     return view('dashboard');
 })->middleware('auth')->name('dashboard');
 
+Route::resource('users', UserController::class)->middleware('auth')->except(['show']);
 Route::resource('specialites', SpecialitesController::class)->middleware('auth')->except(['show']);
 Route::resource('medecins', MedecinsController::class)->middleware('auth')->except(['show']);
 Route::resource('patients', PatientsController::class)->middleware('auth')->except(['show']);
+
+// Dossier medicale
+Route::resource('departements', DepartementController::class)->middleware('auth')->except(['show']);
+Route::resource('departements/typeexamens', TypeExamenController::class)->middleware('auth')->except(['show']);
+
+
 
 Route::resource('/rendezvous', RendezvousController::class)->middleware('auth')->except(['show']);
 Route::resource('services', ServiceController::class)->middleware('auth')->except(['show']);

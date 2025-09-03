@@ -88,6 +88,47 @@
                             </a>
                         </li>
 
+                        <li class="nav-item {{ request()->routeIs('users.*') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p>
+                                    Utilisateurs
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('users.index', ['role' => 'admin']) }}"
+                                        class="nav-link {{ request()->fullUrlIs(url('users?role=admin')) ? 'active' : '' }}">
+                                        <i class="fas fa-user-shield nav-icon"></i>
+                                        <p>Admins</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('users.index', ['role' => 'caissier']) }}"
+                                        class="nav-link {{ request()->fullUrlIs(url('users?role=caissier')) ? 'active' : '' }}">
+                                        <i class="fas fa-cash-register nav-icon"></i>
+                                        <p>Caissiers</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('users.index', ['role' => 'medecin']) }}"
+                                        class="nav-link {{ request()->fullUrlIs(url('users?role=medecin')) ? 'active' : '' }}">
+                                        <i class="fas fa-user-md nav-icon"></i>
+                                        <p>Médecins</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('users.index', ['role' => 'comptable']) }}"
+                                        class="nav-link {{ request()->fullUrlIs(url('users?role=comptable')) ? 'active' : '' }}">
+                                        <i class="fas fa-calculator nav-icon"></i>
+                                        <p>Comptables</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
                         <li class="nav-item menu-open">
                             <a href="{{ route('specialites.index') }}"
                                 class="nav-link {{ request()->routeIs('specialites.index') ? 'active' : '' }}">
@@ -121,6 +162,22 @@
                         </li>
 
                         <li class="nav-item menu-open">
+                            <a href="{{ route('departements.index') }}"
+                                class="nav-link {{ request()->routeIs('departements.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-building"></i>
+                                <p>Départements</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item menu-open">
+                            <a href="{{ route('typeexamens.index') }}"
+                                class="nav-link {{ request()->routeIs('typeexamens.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-folder"></i>
+                                <p>Type d'examens</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item menu-open">
                             <a href="{{ route('services.index') }}"
                                 class="nav-link {{ request()->routeIs('services.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-briefcase-medical"></i>
@@ -129,8 +186,7 @@
                         </li>
 
                         <li class="nav-item menu-open">
-                            <a href="#"
-                                class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-wallet"></i>
                                 <p>Comptabilités</p>
                             </a>
