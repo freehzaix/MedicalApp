@@ -24,9 +24,15 @@
                                 @method('PUT')
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="name">Nom</label>
-                                        <input type="text" name="name" class="form-control"
-                                            value="{{ old('name', $user->name) }}" required>
+                                        <label for="nom">Nom</label>
+                                        <input type="text" name="nom" class="form-control"
+                                            value="{{ old('nom', $user->nom) }}" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="prenom">Prénom</label>
+                                        <input type="text" name="prenom" class="form-control"
+                                            value="{{ old('prenom', $user->prenom) }}" required>
                                     </div>
 
                                     <div class="form-group">

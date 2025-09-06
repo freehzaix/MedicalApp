@@ -39,15 +39,25 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="nom">Nom du médecin</label>
+                                        <label for="nom">Nom</label>
                                         <input type="text" class="form-control" id="nom" name="nom"
-                                            placeholder="Entrer le nom" required>
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="prenom">Prénom</label>
+                                        <input type="text" class="form-control" id="prenom" name="prenom"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            required>
                                     </div>
                                     <div class="form-group">
                                         <label for="specialite">Spécialité</label>
                                         <select class="form-control" id="specialite" name="specialite_id" required>
                                             <option value="">Sélectionner une spécialité</option>
-                                            @foreach($specialites as $specialite)
+                                            @foreach ($specialites as $specialite)
                                                 <option value="{{ $specialite->id }}">{{ $specialite->name }}</option>
                                             @endforeach
                                         </select>
@@ -55,13 +65,14 @@
                                     <div class="form-group">
                                         <label for="telephone">Téléphone</label>
                                         <input type="text" class="form-control" id="telephone" name="telephone"
-                                            placeholder="07 00 00 00 00" required>
+                                            required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tarif">Tarif du medecin</label>
-                                        <input type="text" class="form-control" id="tarif" name="tarif"
-                                            placeholder="Entrer le tarif" required>
+                                        <label for="tarif">Tarif</label>
+                                        <input type="number" class="form-control" id="tarif" name="tarif"
+                                            required>
                                     </div>
+
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">Enregistrer</button>
@@ -94,8 +105,8 @@
                                         @foreach ($medecins as $medecin)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $medecin->nom }}</td>
-                                                <td>{{ $medecin->specialite->name }}</td>
+                                                <td>{{ $medecin->nom }} {{ $medecin->prenom }}</td>
+                                                <td>{{ $medecin->specialite->name ?? '-' }}</td>
                                                 <td>{{ $medecin->telephone }}</td>
                                                 <td>{{ number_format($medecin->tarif, 0, ',', ' ') }} FCFA</td>
                                                 <td>
@@ -107,7 +118,8 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Supprimer ce médecin ?')"><i class="fas fa-trash"></i></button>
+                                                            onclick="return confirm('Supprimer ce médecin ?')"><i
+                                                                class="fas fa-trash"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>

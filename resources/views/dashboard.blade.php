@@ -62,7 +62,7 @@
                     <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>{{ App\Models\Medecin::count() }}</h3>
+                                <h3>{{ App\Models\User::role('medecin')->count() }}</h3>
                                 <p>Médecins</p>
                             </div>
                             <div class="icon">

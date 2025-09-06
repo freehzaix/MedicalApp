@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>@yield('titlePage') | ClinicApp</title>
+    <title>@yield('titlePage') | {{ config('app.name') }}</title>
 
     <!-- Styles / Scripts -->
     @vite(['resources/js/app.js'])

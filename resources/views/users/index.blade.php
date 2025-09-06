@@ -24,9 +24,15 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="name">Nom</label>
-                                        <input type="text" name="name" class="form-control"
-                                            placeholder="Ex: Jean Dupont" required>
+                                        <label for="nom">Nom</label>
+                                        <input type="text" name="nom" class="form-control"
+                                            placeholder="Ex: Dupont" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="prenom">Prénom</label>
+                                        <input type="text" name="prenom" class="form-control"
+                                            placeholder="Ex: Jean" required>
                                     </div>
 
                                     <div class="form-group">

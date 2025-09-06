@@ -21,13 +21,24 @@
             <form action="{{ route('register.post') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Nom complet" value="{{ old('name') }}">
+                    <input type="text" name="nom" class="form-control @error('nom') is-invalid @enderror" placeholder="Nom de famille" value="{{ old('nom') }}">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
                         </div>
                     </div>
-                    @error('name')
+                    @error('nom')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" name="prenom" class="form-control @error('prenom') is-invalid @enderror" placeholder="Prénom" value="{{ old('prenom') }}">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                    @error('prenom')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

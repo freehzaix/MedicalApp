@@ -17,19 +17,21 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'nom' => ['required', 'string', 'max:90'],
+            'prenom' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'terms' => ['required', 'accepted'],
         ]);
 
         $user = User::create([
-            'name' => $validated['name'],
+            'nom' => $validated['nom'],
+            'prenom' => $validated['prenom'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        // ✅ Corrigé
+        /// Attribution du rôle admin automatiquement
         $user->assignRole('admin');
 
         // Connexion automatique après l'inscription
